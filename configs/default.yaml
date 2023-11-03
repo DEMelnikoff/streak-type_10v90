@@ -38,9 +38,9 @@ stop_when_pass_target: &swpt false
 thank_you_msg: >
   <div align='center' style="margin: 10%">
       <p>Thank you for participating!</p>
-      <p>In total, you won <b>$${totalBonus}</b> in bonus money!</p>
+      <p>In total, you won <b>$${totalBonus}</b> tokens!</p>
       <br>
-      <p>Within one week, you'll receive your bonus by email in the form of an electronic Amazon gift card.</p>
+      <p>Within one week, you'll find out if you won the $100.00 bonus. If you win, you'll receive your bonus by email in the form of an electronic Amazon gift card.</p>
       <b>Please wait to be re-directed to Sona Systems.</b>
   </div>
 
@@ -220,8 +220,8 @@ practice_instruction:
 bonus_welcome_1: &i1 >
   <div class="instruction">
   <p>Practice is now complete. Soon, you'll complete the first version of the typing task.</p>
-  <p><b>During the first version of the typing task, you'll compete for a $50.00 bonus!</b></p>
-  <p>Specifically, during the first version of the typing task, you'll earn tokens. The tokens you earn will be entered into a lottery, and if one of your tokens is drawn, you'll win $50.00. Therefore, to maximize your chances of winning a $50.00 bonus, you'll need to earn as many tokens as possible.</p>
+  <p><b>During the first version of the typing task, you'll compete for a $100.00 bonus!</b></p>
+  <p>Specifically, during the first version of the typing task, you'll earn tokens. The tokens you earn will be entered into a lottery, and if one of your tokens is drawn, you'll win $100.00. Therefore, to maximize your chances of winning a $100.00 bonus, you'll need to earn as many tokens as possible.</p>
   <p>To learn how to earn tokens, continue to the next screen.</p>
   </div>
 
@@ -389,9 +389,10 @@ bonus_instruction_2:
 
 debrief_page: &debrief >
   <p>Thank you for participating!</p>
-  <p>In total, you won <b>$${totalBonus}</b> in bonus money!</p>
+  <p>In total, you won <b>$${totalBonus}</b> tokens!</p>
   <br>
-  <p>To receive your bonus, please enter your email address in the space below,<br>
+  <p>Within one week, you'll find out if you won the $100.00 bonus.<br>If you win, you'll receive your bonus by email in the form of an electronic Amazon gift card.</p>
+  <p>To receive payment, please enter your email address in the space below,<br>
   then proceed to be redirected to Sona Systems.</p>
 
 debrief:
