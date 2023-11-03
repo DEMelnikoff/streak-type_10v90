@@ -248,10 +248,10 @@ bonus_welcome_2_2: &i2_2 >
   </div>
 
 i_binary_streak: &ig1 >
-  In the first version of the typing task, bonus money is awarded for <b>streaks of three consecutive completions</b>. Specifically, each time you complete <b>three consecutive rounds</b>, you'll earn a <b>60 cent bonus</b>. 
+  In the first version of the typing task, bonus money is awarded for <b>streaks of three consecutive completions</b>. Specifically, each time you complete <b>three consecutive rounds</b>, you'll earn <b>60 points</b>. 
 
 i_continuous_streak: &ig2 >
-  In the first version of the typing task, bonus money is awarded for <b>streaks of consecutive completions</b>. Specifically, for <b>every consecutive round you complete</b>, you'll earn a <b>20 cent bonus</b>. 
+  In the first version of the typing task, bonus money is awarded for <b>streaks of consecutive completions</b>. Specifically, for <b>every consecutive round you complete</b>, you'll earn <b>20 points</b>. 
 
 i_binary_framing: &ig3 >
   In the first version of the typing task, bonus money is awarded for <b>each individual completion</b>. For <b>each individual round you complete</b>, you'll earn <b>10 points</b>. 
@@ -260,16 +260,16 @@ i_inverse_framing: &ig4 >
   In the first version of the typing task, bonus money is awarded for achieving completions in <b>as few attempts as possible</b>. For each round you complete, you'll earn <b>30 points minus the number of attempts you took to achieve the completion</b>. 
 
 i_binary_streak_2: &ig1_2 >
-  In the second version of the typing task, bonus money is awarded for <b>streaks of three consecutive completions</b>. Specifically, each time you complete <b>three consecutive rounds</b>, you'll earn a <b>60 cent bonus</b>. 
+  In the second version of the typing task, bonus money is awarded for <b>streaks of three consecutive completions</b>. Specifically, each time you complete <b>three consecutive rounds</b>, you'll earn <b>60 points</b>. 
 
 i_continuous_streak_2: &ig2_2 >
-  In the second version of the typing task, bonus money is awarded for <b>streaks of consecutive completions</b>. Specifically, for <b>every consecutive round you complete</b>, you'll earn a <b>20 cent bonus</b>. 
+  In the second version of the typing task, bonus money is awarded for <b>streaks of consecutive completions</b>. Specifically, for <b>every consecutive round you complete</b>, you'll earn <b>20 points</b>. 
 
 i_binary_framing_2: &ig3_2 >
-  In the second version of the typing task, bonus money is awarded for <b>each individual completion</b>. For <b>each individual round you complete</b>, you'll earn a <b>20 cent bonus</b>. 
+  In the second version of the typing task, bonus money is awarded for <b>each individual completion</b>. For <b>each individual round you complete</b>, you'll earn <b>20 points</b>. 
 
 i_inverse_framing_2: &ig4_2 >
-  In the second version of the typing task, bonus money is awarded for achieving completions in <b>as few attempts as possible</b>. For each round you complete, you'll earn <b>30 cents minus the number of attempts you took to achieve the completion</b>. 
+  In the second version of the typing task, bonus money is awarded for achieving completions in <b>as few attempts as possible</b>. For each round you complete, you'll earn <b>30 points minus the number of attempts you took to achieve the completion</b>. 
 
 
 bonus_survey_question1: &q1
