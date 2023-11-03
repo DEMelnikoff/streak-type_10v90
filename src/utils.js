@@ -318,7 +318,7 @@ export function makeMultipliers(condition, pM) {
   const numTrials = 20 * (1 - pM);
   const targetSum = 20 - numTrials;
   const max_strk = 12;
-  const minMax_strk = condition == "binary streak" ? 3 : 0;
+  const minMax_strk = 3;
 
   let geomArray = [];
   let outcomeArray;
