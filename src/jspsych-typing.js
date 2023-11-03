@@ -145,7 +145,7 @@ export function bonusInstruction({
             </div>
         </div>`;
 
-    const page_fail_binary = `<div><p class=instruction-title>Then you'll see that you failed to win any token:</p></div>
+    const page_fail_binary = `<div><p class=instruction-title>Then you'll see that you failed to win any tokens:</p></div>
         <div class="bonus-1" style="margin: 40px 0px">
         <div style="position: relative; text-align: center; width: 800px; height: 150px">
         <div class="feedback-text">
