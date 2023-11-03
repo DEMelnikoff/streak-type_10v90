@@ -152,8 +152,8 @@ const lastpage_start = (trial) => {
     const threesArray = data.filter({phase: 'bonus_feedback_score'}).select('bonus').values;
     const totalThrees_1 = threesArray.slice(0, 20).reduce((a,b)=>a+b,0);
     const totalThrees_2 = threesArray.slice(20, 40).reduce((a,b)=>a+b,0);
-    let totalBonus_1 = (totalSuccess_1 * 20) / 100;
-    let totalBonus_2 = (totalSuccess_2 * 20) / 100;
+    let totalBonus_1 = (totalSuccess_1 * 10) / 100;
+    let totalBonus_2 = (totalSuccess_2 * 10) / 100;
     if (args.condition[0] == 'binary streak') { totalBonus_1 = totalThrees_1 / 100 };
     if (args.condition[1] == 'binary streak') { totalBonus_2 = totalThrees_2 / 100 };
     const totalBonus = totalBonus_1 + totalBonus_2;
@@ -169,7 +169,7 @@ const lastpage_start = (trial) => {
         phase: 'last_page',
         ...trial.data,
     }
-    trial.preamble = trial.preamble.replaceAll('${totalBonus}', totalBonus.toFixed(2));
+    trial.preamble = trial.preamble.replaceAll('{totalSuccess}', totalSuccess.toFixed(0));
 };
 
 timeline.push( renderPlugin({args: args.lastpage, on_start: lastpage_start}) );
