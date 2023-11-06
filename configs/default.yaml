@@ -249,28 +249,28 @@ bonus_welcome_2_2: &i2_2 >
   </div>
 
 i_binary_streak: &ig1 >
-  In the first version of the typing task, tokens are awarded for <b>streaks of three consecutive completions</b>. Specifically, each time you complete <b>three consecutive rounds</b>, you'll earn <b>30 tokens</b>. 
+  In the first version of the typing task, tokens are awarded for <b>streaks of three consecutive completions</b>. Specifically, each time you complete <b>three consecutive rounds</b>, you'll earn <b>60 tokens</b>. 
 
 i_continuous_streak: &ig2 >
-  In the first version of the typing task, tokens are awarded for <b>streaks of consecutive completions</b>. Specifically, for <b>every consecutive round you complete</b>, you'll earn <b>10 tokens</b>. 
+  In the first version of the typing task, tokens are awarded for <b>streaks of consecutive completions</b>. Specifically, for <b>every consecutive round you complete</b>, you'll earn <b>20 tokens</b>. 
 
 i_binary_framing: &ig3 >
-  In the first version of the typing task, tokens are awarded for <b>each individual completion</b>. For <b>each individual round you complete</b>, you'll earn <b>10 tokens</b>. 
+  In the first version of the typing task, tokens are awarded for <b>each individual completion</b>. For <b>each individual round you complete</b>, you'll earn <b>20 tokens</b>. 
 
 i_inverse_framing: &ig4 >
-  In the first version of the typing task, tokens are awarded for achieving completions in <b>as few attempts as possible</b>. For each round you complete, you'll earn <b>30 tokens minus the number of attempts you took to achieve the completion</b>. 
+  In the first version of the typing task, tokens are awarded for achieving completions in <b>as few attempts as possible</b>. For each round you complete, you'll earn <b>25 tokens minus {tokens} for every attempt you took to achieve the completion</b>. 
 
 i_binary_streak_2: &ig1_2 >
-  In the second version of the typing task, tokens are awarded for <b>streaks of three consecutive completions</b>. Specifically, each time you complete <b>three consecutive rounds</b>, you'll earn <b>30 tokens</b>. 
+  In the second version of the typing task, tokens are awarded for <b>streaks of three consecutive completions</b>. Specifically, each time you complete <b>three consecutive rounds</b>, you'll earn <b>60 tokens</b>. 
 
 i_continuous_streak_2: &ig2_2 >
-  In the second version of the typing task, tokens are awarded for <b>streaks of consecutive completions</b>. Specifically, for <b>every consecutive round you complete</b>, you'll earn <b>10 tokens</b>. 
+  In the second version of the typing task, tokens are awarded for <b>streaks of consecutive completions</b>. Specifically, for <b>every consecutive round you complete</b>, you'll earn <b>20 tokens</b>. 
 
 i_binary_framing_2: &ig3_2 >
-  In the second version of the typing task, tokens are awarded for <b>each individual completion</b>. For <b>each individual round you complete</b>, you'll earn <b>10 tokens</b>. 
+  In the second version of the typing task, tokens are awarded for <b>each individual completion</b>. For <b>each individual round you complete</b>, you'll earn <b>20 tokens</b>. 
 
 i_inverse_framing_2: &ig4_2 >
-  In the second version of the typing task, tokens are awarded for achieving completions in <b>as few attempts as possible</b>. For each round you complete, you'll earn <b>30 tokens minus the number of attempts you took to achieve the completion</b>. 
+  In the second version of the typing task, tokens are awarded for achieving completions in <b>as few attempts as possible</b>. For each round you complete, you'll earn <b>25 tokens minus {tokens} for every attempt you took to achieve the completion</b>. 
 
 
 bonus_survey_question1: &q1
@@ -285,33 +285,41 @@ bonus_survey_question2: &q2
   prompt: If you complete the first two rounds in a row, then fail to complete the third round, you will have earned…
   options:
     - 0 tokens
-    - 10 tokens
     - 20 tokens
-    - 30 tokens
+    - 40 tokens
+    - 60 tokens
 
 bonus_survey_question3: &q3
   prompt: If you complete the first three rounds in a row, then fail to complete the fourth round, you will have earned…
   options:
     - 0 tokens
-    - 10 tokens
     - 20 tokens
-    - 30 tokens
+    - 40 tokens
+    - 60 tokens
 
 bonus_survey_question2_inv: &q2_inv
-  prompt: If you achieve a completion on your 3rd attempt, you will have earned…
+  prompt: If you achieve a completion on your 1st attempt, you will have earned…
   options:
-    - 0 tokens
-    - 10 tokens
-    - 27 tokens
-    - 30 tokens
+    - 25 - 20 = 5 tokens
+    - 25 - 5 = 20 tokens
+    - 25 - 4 = 21 tokens
+    - 25 - 1 = 24 tokens
 
 bonus_survey_question3_inv: &q3_inv
-  prompt: If you achieve a completion on your 20th attempt, you will have earned…
+  prompt: If you achieve a completion on your 5th attempt, you will have earned…
   options:
-    - 0 tokens
-    - 10 tokens
-    - 27 tokens
-    - 30 tokens
+    - 25 - 20 = 5 tokens
+    - 25 - 5 = 20 tokens
+    - 25 - 4 = 21 tokens
+    - 25 - 1 = 24 tokens
+
+bonus_survey_question4: &q4
+  prompt: In the tile game, how often do most players reach the target score?
+  options:
+    - 20% of the time
+    - 40% of the time
+    - 60% of the time
+    - 80% of the time
 
 bonus_survey_success: &success >
   <p>You're ready to complete the first version of the typing task!<br>To begin, continue to the next screen.</p>
@@ -347,8 +355,8 @@ bonus_instruction:
     binary: 
       - "Bonus: +$0.10"
       - "Bonus: +$0.00"
-  questions: [*q1, *q2, *q3]
-  questions_inv: [*q1, *q2_inv, *q3_inv]
+  questions: [*q1, *q2, *q3, *q4]
+  questions_inv: [*q1, *q2_inv, *q3_inv, *q4]
   randomize_order: true 
   data: 
     phase: bonus_instruction
@@ -379,8 +387,8 @@ bonus_instruction_2:
     binary: 
       - "Bonus: +$0.10"
       - "Bonus: +$0.00"
-  questions: [*q1, *q2, *q3]
-  questions_inv: [*q1, *q2_inv, *q3_inv]
+  questions: [*q1, *q2, *q3, *q4]
+  questions_inv: [*q1, *q2_inv, *q3_inv, *q4]
   randomize_order: true 
   data: 
     phase: bonus_instruction
