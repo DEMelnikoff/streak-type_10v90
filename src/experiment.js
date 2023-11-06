@@ -22,7 +22,6 @@ args.condition = jsPsych.randomization.repeat([streakType, 'binary'], 1);
 const multiplierArray1 = makeMultipliers(args.condition[0], pM);
 const multiplierArray2 = makeMultipliers(args.condition[1], pM);
 args.multiplierArray = multiplierArray1.concat(multiplierArray2);
-
 let sona_id = jsPsych.data.getURLVariable("id");
 if (!sona_id) { sona_id = 0}
 
@@ -60,12 +59,9 @@ const MakeFlowQs = function(order) {
         {prompt: `During the ${order} version of the typing task, how <strong>engrossed</strong> did you feel in what you were doing?`,
         name: `engrossed_${order}`,
         labels: ["0<br>Not very engrossed", '1', '2', '3', '4', '5', '6', '7', '8', '9', "10<br>More engrossed than I've ever felt"]},
-        {prompt: `During the ${order} version of the typing task, how often did you lose focus and <b>"zone out"</b>?`,
-        name: `zoneOut_${order}`,
-        labels: ["0<br>Never", '1', '2', '3', '4', '5', '6', '7', '8', '9', "10<br>Constantly"]},
-        {prompt: `During the ${order} version of the typing task, how often did you feel completely focused and <b>"in the zone"</b>?`,
-        name: `wonder_${order}`,
-        labels: ["0<br>Never", '1', '2', '3', '4', '5', '6', '7', '8', '9', "10<br>Constantly"]},
+        {prompt: `How much of your <b>conscious focus and attention</b> did the ${order} version of the typing task manage to capture?`,
+        name: `attention_${order}`,
+        labels: ["0%<br>None of it", '10%', '20%', '30%', '40%', '50%', '60%', '70%', '80%', '90%', "100%<br>All of it"]},
     ];
     this.randomize_question_order = false;
     this.scale_width = 700;
@@ -156,11 +152,11 @@ const lastpage_start = (trial) => {
     const totalSuccess = totalSuccess_1 + totalSuccess_2;
     let totalBonus_1, totalBonus_2;
     if (args.condition[0] == "inverse streak") {
-        totalBonus_1 = (pM == .2) ? (totalSuccess_1 * 25 - (20 - totalSuccess_1) * 1) : (totalSuccess_1 * 25 - (20 - totalSuccess_1) * 4);
+        totalBonus_1 = (pM == .2) ? (totalSuccess_1 * 24 - (20 - totalSuccess_1) * 1) : (totalSuccess_1 * 21 - (20 - totalSuccess_1) * 4);
         totalBonus_2 = totalSuccess_2 * 20;
     } else if (args.condition[1] == "inverse streak") {
         totalBonus_1 = totalSuccess_1 * 20; 
-        totalBonus_2 = (pM == .2) ? (totalSuccess_2 * 25 - (20 - totalSuccess_2) * 1) : (totalSuccess_2 * 25 - (20 - totalSuccess_2) * 4);
+        totalBonus_2 = (pM == .2) ? (totalSuccess_2 * 24 - (20 - totalSuccess_2) * 1) : (totalSuccess_2 * 21 - (20 - totalSuccess_2) * 4);
     } else {
         totalBonus_1 = totalSuccess_1 * 20;
         totalBonus_2 = totalSuccess_2 * 20;        
