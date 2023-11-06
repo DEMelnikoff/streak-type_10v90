@@ -60,6 +60,9 @@ const MakeFlowQs = function(order) {
         {prompt: `During the ${order} version of the typing task, how <strong>engrossed</strong> did you feel in what you were doing?`,
         name: `engrossed_${order}`,
         labels: ["0<br>Not very engrossed", '1', '2', '3', '4', '5', '6', '7', '8', '9', "10<br>More engrossed than I've ever felt"]},
+        {prompt: `During the ${order} version of the typing task, how often did your attention drift away from the task at hand?`,
+        name: `drift_${order}`,
+        labels: ["0<br>Never", '1', '2', '3', '4', '5', '6', '7', '8', '9', "10<br>Constantly"]},
     ];
     this.randomize_question_order = false;
     this.scale_width = 700;
