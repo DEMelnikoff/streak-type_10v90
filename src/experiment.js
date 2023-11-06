@@ -60,7 +60,10 @@ const MakeFlowQs = function(order) {
         {prompt: `During the ${order} version of the typing task, how <strong>engrossed</strong> did you feel in what you were doing?`,
         name: `engrossed_${order}`,
         labels: ["0<br>Not very engrossed", '1', '2', '3', '4', '5', '6', '7', '8', '9', "10<br>More engrossed than I've ever felt"]},
-        {prompt: `During the ${order} version of the typing task, how often did you find yourself wondering when the task would end?`,
+        {prompt: `During the ${order} version of the typing task, how often did you lose focus and <b>"zone out"</b>?`,
+        name: `zoneOut_${order}`,
+        labels: ["0<br>Never", '1', '2', '3', '4', '5', '6', '7', '8', '9', "10<br>Constantly"]},
+        {prompt: `During the ${order} version of the typing task, how often did you feel completely focused and <b>"in the zone"</b>?`,
         name: `wonder_${order}`,
         labels: ["0<br>Never", '1', '2', '3', '4', '5', '6', '7', '8', '9', "10<br>Constantly"]},
     ];
@@ -151,11 +154,17 @@ const lastpage_start = (trial) => {
     const totalSuccess_1 = successArray.slice(0, 20).reduce((a,b)=>a+b,0);
     const totalSuccess_2 = successArray.slice(20, 40).reduce((a,b)=>a+b,0);
     const totalSuccess = totalSuccess_1 + totalSuccess_2;
-    const threesArray = data.filter({phase: 'bonus_feedback_score'}).select('bonus').values;
-    const totalThrees_1 = threesArray.slice(0, 20).reduce((a,b)=>a+b,0);
-    const totalThrees_2 = threesArray.slice(20, 40).reduce((a,b)=>a+b,0);
-    let totalBonus_1 = (totalSuccess_1 * 10);
-    let totalBonus_2 = (totalSuccess_2 * 10);
+    let totalBonus_1, totalBonus_2;
+    if (args.condition[0] == "inverse streak") {
+        totalBonus_1 = (pM == .2) ? (totalSuccess_1 * 25 - (20 - totalSuccess_1) * 1) : (totalSuccess_1 * 25 - (20 - totalSuccess_1) * 4);
+        totalBonus_2 = totalSuccess_2 * 20;
+    } else if (args.condition[1] == "inverse streak") {
+        totalBonus_1 = totalSuccess_1 * 20; 
+        totalBonus_2 = (pM == .2) ? (totalSuccess_2 * 25 - (20 - totalSuccess_2) * 1) : (totalSuccess_2 * 25 - (20 - totalSuccess_2) * 4);
+    } else {
+        totalBonus_1 = totalSuccess_1 * 20;
+        totalBonus_2 = totalSuccess_2 * 20;        
+    }
     const totalBonus = totalBonus_1 + totalBonus_2;
     trial.data = {
         totalBonus: totalBonus,
@@ -164,8 +173,6 @@ const lastpage_start = (trial) => {
         totalSuccess_2: totalSuccess_2,
         totalBonus_1: totalBonus_1,
         totalBonus_2: totalBonus_2,
-        totalThrees_1: totalThrees_1,
-        totalThrees_2: totalThrees_2,
         phase: 'last_page',
         ...trial.data,
     }
