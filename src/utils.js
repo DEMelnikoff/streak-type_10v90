@@ -314,11 +314,11 @@ export function makeMultipliers(condition, pM) {
     return Math.floor(Math.log(Math.random()) / Math.log(1 - p));
   };
 
-  const probabilityOfSuccess = 1 - pM; // Adjust this probability as needed
-  const numTrials = 20 * (1 - pM);
+  const probabilityOfSuccess = 1 - pM; // Adjust this probability as neede
+  const numTrials = (condition == "inverse streak") ? 20 * pM : 20 * (1 - pM);
   const targetSum = 20 - numTrials;
   const max_strk = 12;
-  const minMax_strk = 3;
+  const minMax_strk = 0;
 
   let geomArray = [];
   let outcomeArray;
@@ -330,11 +330,13 @@ export function makeMultipliers(condition, pM) {
       geomArray = [];
       for (let i = 0; i < numTrials; i++) {
         let draw = geometricRandom(probabilityOfSuccess);
+        /*
         if (pM == .9) {
           while (draw % 3 != 0) {
             draw = geometricRandom(probabilityOfSuccess);
           };         
         };
+        */
         geomArray.push(draw);
       };
       geomArray_sum = geomArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
@@ -351,14 +353,23 @@ export function makeMultipliers(condition, pM) {
     };
 
   } else {
-    while (geomArray_sum != targetSum || geomArray_max >= targetMax) {
+    while (geomArray_sum != targetSum || geomArray_max < -1) {
       geomArray = [];
       for (let i = 0; i < numTrials; i++) {
-          geomArray.push(geometricRandom(probabilityOfSuccess));
+        let draw = geometricRandom(pM);
+        /*
+        if (pM == .9) {
+          while (draw % 3 != 0) {
+            draw = geometricRandom(probabilityOfSuccess);
+          };         
+        };
+        */
+        geomArray.push(draw);
       };
       geomArray_sum = geomArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
       geomArray_max = Math.max(...geomArray);
     };
+
     for (let i = 0; i < numTrials; i++) {
       if (i == 0) {
         outcomeArray = Array(geomArray[i]).fill(1);
@@ -367,7 +378,7 @@ export function makeMultipliers(condition, pM) {
       }
       outcomeArray.push(-1);   
     };
-  }
+  };
 
   return outcomeArray;
 

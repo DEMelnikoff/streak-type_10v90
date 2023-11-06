@@ -16,12 +16,12 @@ const args = await readYaml('configs/default.yaml');
 
 // obtain subject id and assign their group condition t  
 const subject_id = jsPsych.randomization.randomID(10);
-const streakType = ['binary streak', 'continuous streak'][Math.floor(Math.random() * 2)];
-const pM = [.15, .9][Math.floor(Math.random() * 2)]
+const streakType = ['inverse streak', 'continuous streak'][Math.floor(Math.random() * 2)];
+const pM = [.2, .8][Math.floor(Math.random() * 2)];
 args.condition = jsPsych.randomization.repeat([streakType, 'binary'], 1);
 const multiplierArray1 = makeMultipliers(args.condition[0], pM);
 const multiplierArray2 = makeMultipliers(args.condition[1], pM);
-console.log(pM, multiplierArray1, multiplierArray2);
+console.log(streakType, pM, multiplierArray1, multiplierArray2);
 args.multiplierArray = multiplierArray1.concat(multiplierArray2);
 
 let sona_id = jsPsych.data.getURLVariable("id");
@@ -117,19 +117,19 @@ timeline.push( renderPlugin({args: args.practice_instruction}))
 timeline.push( new practicePhase(args.practice).getTrial() )
 
 // bonus phase (first)
-timeline.push( bonusInstruction({condition: args.condition[0], ...args.bonus_instruction}))
+timeline.push( bonusInstruction({condition: args.condition[0], pM: pM, ...args.bonus_instruction}))
 
 // bonus phase trials start here (first)
-timeline.push( new bonusPhase({condition: args.condition[0], ...args.bonus, first_trial_num: 0, multiplierArray: args.multiplierArray}).getTrial() )
+timeline.push( new bonusPhase({condition: args.condition[0], ...args.bonus, first_trial_num: 0, multiplierArray: args.multiplierArray, pM: pM}).getTrial() )
 
 timeline.push( new MakeFlowQs('first') );
 timeline.push( new MakeEnjoyQs('first') );
 
 // bonus phase (second)
-timeline.push( bonusInstruction({condition: args.condition[1], ...args.bonus_instruction_2}))
+timeline.push( bonusInstruction({condition: args.condition[1], pM: pM, ...args.bonus_instruction_2}))
 
 // bonus phase trials start here (second)
-timeline.push( new bonusPhase({condition: args.condition[1], ...args.bonus, first_trial_num: 20, multiplierArray: args.multiplierArray}).getTrial() )
+timeline.push( new bonusPhase({condition: args.condition[1], ...args.bonus, first_trial_num: 20, multiplierArray: args.multiplierArray, pM: pM}).getTrial() )
 
 timeline.push( new MakeFlowQs('second') );
 timeline.push( new MakeEnjoyQs('second') );

@@ -112,13 +112,18 @@ export function renderPlugin({
 
 export function bonusInstruction({
     instruction = undefined, example = undefined, questions = [], questions_inv = [], condition = "",
-    randomize_order = true, data = {}, feedback_success = "success", feedback_failure = "failure",
+    randomize_order = true, data = {}, feedback_success = "success", feedback_failure = "failure", pM = undefined,
 } = {}) {
 
     let correct = false;
     const pages = [];
-    const page_1 = instruction.title.replaceAll('${instruction_by_group}', instruction[condition]);
-    const page_2 = instruction.info.replaceAll('${instruction_by_group}', instruction[condition]);
+    console.log(condition, instruction[condition]);
+    const numTokens = (pM == .2) ? "1 token" : "4 tokens";
+    const tokenEquation = (pM == .2) ? "25 - 1 = 24 tokens" : "25 - 4 = 21 tokens";
+    const earningsExample = (pM == .2) ? "24 tokens" : "21 tokens";
+    const instruction_tokenAdjustment = (condition == "inverse streak") ? instruction[condition].replaceAll('{tokens}', numTokens) : instruction[condition];
+    const page_1 = instruction.title.replaceAll('${instruction_by_group}', instruction_tokenAdjustment);
+    const page_2 = instruction.info.replaceAll('${instruction_by_group}', instruction_tokenAdjustment);
     pages.push(page_1);
     pages.push(page_2);
     const page_success = `<div><p class=instruction-title>If you score <b><span id='current-number'>62</span></b> and the target score is <b><span id='target-number'>50</span></b>, you'll see:</p></div>
@@ -165,11 +170,11 @@ export function bonusInstruction({
         </div>`;
 
     const page_fail_cStrk = [`<div><p class=instruction-title>Then you'll see how much money you earned from your steak.<br>
-        For example, if you miss the target score after achieving a streak of three, you'll see that you won 30 tokens:</p></div>
+        For example, if you miss the target score after achieving a streak of three, you'll see that you won 60 tokens:</p></div>
         <div class="bonus-1" style="margin: 40px 0px">
             <div class="feedback-container">
                 <img src="https://raw.githubusercontent.com/dennislx/jspsych-typing/main/public/img/coins.jpg">
-                <div class="feedback-text"><p>Your streak was 3</p><span style="font-size: 75px; line-height:90px">+30</span></div>
+                <div class="feedback-text"><p>Your streak was 3</p><span style="font-size: 75px; line-height:90px">+60</span></div>
             </div>
         </div>`,
 
@@ -182,11 +187,11 @@ export function bonusInstruction({
         </div></div></div>`];
 
 
-    const page_success_binary = `<div><p class=instruction-title>Then you'll see that you won 10 tokens:</p></div>
+    const page_success_binary = `<div><p class=instruction-title>Then you'll see that you won 20 tokens:</p></div>
         <div class="bonus-1" style="margin: 40px 0px">
             <div class="feedback-container">
                 <img src="https://raw.githubusercontent.com/dennislx/jspsych-typing/main/public/img/coins.jpg">
-                <div class="feedback-text"><p>You reached the target score!</p><span style="font-size: 75px; line-height:90px">+10</span></div>
+                <div class="feedback-text"><p>You reached the target score!</p><span style="font-size: 75px; line-height:90px">+20</span></div>
             </div>
         </div>`;
 
@@ -195,11 +200,11 @@ export function bonusInstruction({
             <p>You reached the target score!</p>Current Streak: 3
         </div>`;
 
-    const page_success_iStrk = `<div><p class=instruction-title>Then you'll see that you won 30 tokens minus your number of attempts.<br>For example, if you reach the target score on your 5th attempt, you'll see that you won 25 tokens:</p></div>
+    const page_success_iStrk = `<div><p class=instruction-title>Then you'll see that you won 25 tokens minus ${numTokens} for each attempt.<br>For example, if you reach the target score on your 1st attempt,<br>you'll see that you won ${tokenEquation}:</p></div>
         <div class="bonus-1" style="margin: 40px 0px">
             <div class="feedback-container">
                 <img src="https://raw.githubusercontent.com/dennislx/jspsych-typing/main/public/img/coins.jpg">
-                <div class="feedback-text"><p>You succeeded on your 5th attempt!</p><span style="font-size: 75px; line-height:90px">+25</span></div>
+                <div class="feedback-text"><p>You succeeded on your 1st attempt!</p><span style="font-size: 75px; line-height:90px">+${earningsExample}</span></div>
             </div>
         </div>`;
 
@@ -213,7 +218,7 @@ export function bonusInstruction({
             <p>You reached the target score!</p>Current Streak: 2/3
         </div>`,
 
-        `<div><p class=instruction-title>After three completions, you'll see that you won 30 tokens:</p></div>
+        `<div><p class=instruction-title>After three completions, you'll see that you won 60 tokens:</p></div>
         <div class="bonus-1" style="margin: 40px 0px">
             <div class="feedback-container">
                 <img src="https://raw.githubusercontent.com/dennislx/jspsych-typing/main/public/img/coins.jpg">
@@ -221,12 +226,18 @@ export function bonusInstruction({
             </div>
         </div>`];
 
+    let easyOrHard = (pM == .8) ? 'relatively easy' : 'relatively difficult';
+
+    let hitRate = (pM == .8) ? '80%' : '20%';
+
+    const page_pM = [`<div><p class=instruction-title>The typing task is calibrated to be <b>${easyOrHard}</b>.<br>Specifically, most players reach the target score approximately <b>${hitRate}</b> of the time.</p></div>`];
 
     if (condition == 'inverse streak') {
         pages.push(page_fail);
         pages.push(page_fail_iStrk);
         pages.push(page_success);
-        pages.push(page_success_iStrk)
+        pages.push(page_success_iStrk);
+        pages.push(page_pM);
     } else {
         pages.push(page_success);
         if (condition == "binary streak") {
@@ -244,7 +255,8 @@ export function bonusInstruction({
         } else if (condition == "binary") {
             pages.push(page_fail_binary);
         } 
-    }
+        pages.push(page_pM);
+    };
 
 
     /*
@@ -275,18 +287,20 @@ export function bonusInstruction({
         },
         randomize_question_order: randomize_order,
         on_finish: function (data) {
-            let { Q0, Q1, Q2 } = data.response;
+            let { Q0, Q1, Q2, Q3 } = data.response;
             if (condition == 'inverse streak') {
                 data.pass = correct = [
                     Q0.includes("At least"),
-                    Q1.startsWith('27'),
-                    Q2.startsWith('10')
+                    Q1.startsWith(pM == .2 ? '25 - 1 = 24 tokens' : '25 - 4 = 21 tokens'),
+                    Q2.startsWith(pM == .2 ? '25 - 5 = 20 tokens' : '25 - 20 = 5 tokens'),
+                    Q3.startsWith(hitRate)
                 ].every(Boolean)
             } else {
                 data.pass = correct = [
                     Q0.includes("At least"),
-                    Q1.startsWith(condition === "binary streak" ? '0' : '20'),
-                    Q2.startsWith('30')
+                    Q1.startsWith(condition === "binary streak" ? '0' : '40'),
+                    Q2.startsWith('60'),
+                    Q3.startsWith(hitRate)
                 ].every(Boolean)                
             };
         },
@@ -479,7 +493,7 @@ function getDist(args){
 }
 
 export class bonusPhase extends practicePhase {
-    constructor({ numOfTrial = 1, fontsize = "", no_prompt = false, list = [], data = {}, target_dist = {}, target_min = 1, condition = undefined, feedback = undefined, early_stop = undefined, time = undefined, true_random = undefined, prob_win = undefined, first_trial_num = undefined, multiplierArray = undefined} = {}) {
+    constructor({ numOfTrial = 1, fontsize = "", no_prompt = false, list = [], data = {}, target_dist = {}, target_min = 1, condition = undefined, feedback = undefined, early_stop = undefined, time = undefined, true_random = undefined, prob_win = undefined, first_trial_num = undefined, multiplierArray = undefined, pM = undefined} = {}) {
         const {trial_time, fix_time, score_time, reward_time} = time;
         super({ numOfTrial: numOfTrial, trial_duration: trial_time, fixation_duration: fix_time, fontsize: fontsize, no_prompt: no_prompt, list: list, data: data });
         this.target_dist = getDist(target_dist);
@@ -495,6 +509,7 @@ export class bonusPhase extends practicePhase {
         this.prob_win = prob_win;
         this.multiplier = 1;
         this.delta = 10;
+        this.pM = pM;
         this.trial_i = first_trial_num;
         this.multiplierArray = multiplierArray;
         this.reward_agent = (condition === "binary") ?
@@ -603,7 +618,7 @@ export class bonusPhase extends practicePhase {
             on_timeline_start: () => {
                 const response = jsPsych.data.getLastTrialData().trials[0];
                 ({success, target, score: current} = response);
-                bonus_msg = this.reward_agent.step(success);
+                bonus_msg = this.reward_agent.step(success, this.pM);
                 ({bonus, streak} = this.reward_agent.property);
                 if (this.condition === "continuous streak" && this.trial_i === this.numOfTrial) {
                     // the bonus in the last round isn't counted when under this condition
@@ -621,7 +636,7 @@ class Binary {
         this.bonus = 0;
         this.streak_sofar = 0;
     }
-    step(success) {
+    step(success, pM) {
         this.bonus = this.score(success);
         this.overall_bonus += this.bonus;
         if (success) {
@@ -637,7 +652,7 @@ class Binary {
         //return `Bonus: + $${this.bonus.toFixed(2)}`;
     }
     score(success){
-        return success? 10 : 0
+        return success? 20 : 0
     }
     get property(){
         return {
@@ -653,9 +668,9 @@ class InverseStreak extends Binary {
         super();
         this.streak = this.streak_sofar;
     }
-    step(success) {
+    step(success, pM) {
         this.streak_sofar = this.streak;
-        this.bonus = this.score(success);
+        this.bonus = this.score(success, pM);
         // show streak length when increase or initiate a streak
         if (success) {
             this.overall_bonus += this.bonus;
@@ -672,8 +687,10 @@ class InverseStreak extends Binary {
             return `<p>You missed the target score.</p>Total Attempts: ${this.streak}`;        
         };
     }
-    score(succcess){
-        return succcess ? 30 - (this.streak_sofar + 1) : 0;
+    score(succcess, pM){
+        let costPerMiss = (pM == .2) ? 1 : 4
+        console.log(costPerMiss, pM);
+        return succcess ? 25 - (this.streak_sofar*costPerMiss + costPerMiss) : 0;
     }
 }
 
@@ -683,7 +700,7 @@ class ContinuousStreak extends Binary {
         super();
         this.streak = this.streak_sofar;
     }
-    step(success) {
+    step(success, pM) {
         this.streak_sofar = this.streak;
         this.bonus = this.score(success);
         // show streak length when increase or initiate a streak
@@ -707,7 +724,7 @@ class ContinuousStreak extends Binary {
         };
     }
     score(succcess){
-        return succcess? 0 : this.streak_sofar * 10
+        return succcess? 0 : this.streak_sofar * 20
     }
 }
 
