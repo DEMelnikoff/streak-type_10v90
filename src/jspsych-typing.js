@@ -688,7 +688,8 @@ class InverseStreak extends Binary {
     }
     score(succcess, pM){
         let costPerMiss = (pM == .2) ? 1 : 4
-        return succcess ? 25 - (this.streak_sofar*costPerMiss + costPerMiss) : 0;
+        let invStrkScore = succcess ? 25 - (this.streak_sofar*costPerMiss + costPerMiss) : 0;
+        return (invStrkScore < 0) ? 0 : invStrkScore;
     }
 }
 

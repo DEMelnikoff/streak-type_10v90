@@ -193,7 +193,7 @@ jsPsych.opts.show_progress_bar = args.show_progress_bar;
 jsPsych.opts.experiment_width = args.screenwidth;
 jsPsych.opts.on_finish = () => {
     setTimeout(function() { 
-        location.href = `https://udel-buad.sona-systems.com/webstudy_credit.aspx?experiment_id=503&credit_token=1c41109f97684d3a8c72d4c046f1854e&survey_code=${sona_id}`
+        location.href = `https://udel-buad.sona-systems.com/webstudy_credit.aspx?experiment_id=510&credit_token=97edfae6419a4ced9b13611a00dca7d0&survey_code=${sona_id}`
     }, 500); // 2 seconds
 
 }
