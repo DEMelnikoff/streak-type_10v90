@@ -117,7 +117,6 @@ export function bonusInstruction({
 
     let correct = false;
     const pages = [];
-    console.log(condition, instruction[condition]);
     const numTokens = (pM == .2) ? "1 token" : "4 tokens";
     const tokenEquation = (pM == .2) ? "25 - 1 = 24 tokens" : "25 - 4 = 21 tokens";
     const earningsExample = (pM == .2) ? "24 tokens" : "21 tokens";
@@ -689,7 +688,6 @@ class InverseStreak extends Binary {
     }
     score(succcess, pM){
         let costPerMiss = (pM == .2) ? 1 : 4
-        console.log(costPerMiss, pM);
         return succcess ? 25 - (this.streak_sofar*costPerMiss + costPerMiss) : 0;
     }
 }

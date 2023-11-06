@@ -21,7 +21,6 @@ const pM = [.2, .8][Math.floor(Math.random() * 2)];
 args.condition = jsPsych.randomization.repeat([streakType, 'binary'], 1);
 const multiplierArray1 = makeMultipliers(args.condition[0], pM);
 const multiplierArray2 = makeMultipliers(args.condition[1], pM);
-console.log(streakType, pM, multiplierArray1, multiplierArray2);
 args.multiplierArray = multiplierArray1.concat(multiplierArray2);
 
 let sona_id = jsPsych.data.getURLVariable("id");
