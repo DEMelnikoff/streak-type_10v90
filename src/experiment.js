@@ -25,6 +25,7 @@ args.multiplierArray = multiplierArray1.concat(multiplierArray2);
 let sona_id = jsPsych.data.getURLVariable("id");
 if (!sona_id) { sona_id = 0}
 
+
 console.log(pM);
 
 jsPsych.data.addProperties({
