@@ -8,7 +8,7 @@ true_random: &tr true
 prob_win: &pw .6
 
 # ========= osf/datapipe/prolific settings ======================================
-osf_id: EHTFhVdf2PsL
+osf_id: SSBwXyteeQZN
 prolific_id: 84F912E7
 pipe_data_to_osf: true
 
@@ -258,7 +258,7 @@ i_binary_framing: &ig3 >
   In the first version of the typing task, tokens are awarded for <b>each individual completion</b>. For <b>each individual round you complete</b>, you'll earn <b>20 tokens</b>. 
 
 i_inverse_framing: &ig4 >
-  In the first version of the typing task, tokens are awarded for achieving completions in <b>as few attempts as possible</b>. For each round you complete, you'll earn <b>25 tokens minus {tokens} for every attempt you took to achieve the completion</b>. 
+  In the first version of the typing task, tokens are awarded for achieving completions in <b>as few attempts as possible</b>. For each round you complete, you'll earn <b>30 tokens minus {tokens} for every attempt you took to achieve the completion</b>. 
 
 i_binary_streak_2: &ig1_2 >
   In the second version of the typing task, tokens are awarded for <b>streaks of three consecutive completions</b>. Specifically, each time you complete <b>three consecutive rounds</b>, you'll earn <b>60 tokens</b>. 
@@ -270,7 +270,7 @@ i_binary_framing_2: &ig3_2 >
   In the second version of the typing task, tokens are awarded for <b>each individual completion</b>. For <b>each individual round you complete</b>, you'll earn <b>20 tokens</b>. 
 
 i_inverse_framing_2: &ig4_2 >
-  In the second version of the typing task, tokens are awarded for achieving completions in <b>as few attempts as possible</b>. For each round you complete, you'll earn <b>25 tokens minus {tokens} for every attempt you took to achieve the completion</b>. 
+  In the second version of the typing task, tokens are awarded for achieving completions in <b>as few attempts as possible</b>. For each round you complete, you'll earn <b>30 tokens minus {tokens} for every attempt you took to achieve the completion</b>. 
 
 
 bonus_survey_question1: &q1
@@ -300,25 +300,24 @@ bonus_survey_question3: &q3
 bonus_survey_question2_inv: &q2_inv
   prompt: If you achieve a completion on your 1st attempt, you will have earned…
   options:
-    - 25 - 20 = 5 tokens
-    - 25 - 5 = 20 tokens
-    - 25 - 4 = 21 tokens
-    - 25 - 1 = 24 tokens
+    - 30 - 20 = 10 tokens
+    - 30 - 8 = 22 tokens
+    - 30 - 5 = 25 tokens
+    - 30 - 2 = 28 tokens
 
 bonus_survey_question3_inv: &q3_inv
-  prompt: If you achieve a completion on your 5th attempt, you will have earned…
+  prompt: If you achieve a completion on your 3rd attempt, you will have earned…
   options:
-    - 25 - 20 = 5 tokens
-    - 25 - 5 = 20 tokens
-    - 25 - 4 = 21 tokens
-    - 25 - 1 = 24 tokens
+    - 30 - 20 = 5 tokens
+    - 30 - 24 = 6 tokens
+    - 30 - 15 = 15 tokens
+    - 30 - 6 = 24 tokens
 
 bonus_survey_question4: &q4
   prompt: In the typing task, how often do most players reach the target score?
   options:
     - 20% of the time
-    - 40% of the time
-    - 60% of the time
+    - 50% of the time
     - 80% of the time
 
 bonus_survey_success: &success >
