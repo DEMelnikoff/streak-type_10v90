@@ -16,14 +16,16 @@ const args = await readYaml('configs/default.yaml');
 
 // obtain subject id and assign their group condition t  
 const subject_id = jsPsych.randomization.randomID(10);
-const streakType = ['inverse streak', 'continuous streak'][Math.floor(Math.random() * 2)];
-const pM = [.2, .8][Math.floor(Math.random() * 2)];
-args.condition = jsPsych.randomization.repeat([streakType, 'binary'], 1);
+const streakType = ['inverse streak', 'continuous streak'];
+const pM = [.2, .5, .8][Math.floor(Math.random() * 3)];
+args.condition = jsPsych.randomization.repeat(streakType, 1);
 const multiplierArray1 = makeMultipliers(args.condition[0], pM);
 const multiplierArray2 = makeMultipliers(args.condition[1], pM);
 args.multiplierArray = multiplierArray1.concat(multiplierArray2);
 let sona_id = jsPsych.data.getURLVariable("id");
 if (!sona_id) { sona_id = 0}
+
+console.log(pM);
 
 jsPsych.data.addProperties({
     date: new Date(),
@@ -37,8 +39,9 @@ jsPsych.data.addProperties({
 
 
 // dv constructor functions
-const zeroToExtremely = ["0<br>A little", '1', '2', '3', '4', '5', '6', '7', '8', '9', "10<br>Extremely"];
-const zeroToALot = ['0<br>A little', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10<br>A lot'];
+const zeroToExtremely = ["0<br>Not at all", '1', '2', '3', '4', '5', '6', '7', '8', '9', "10<br>Extremely"];
+const zeroToALot = ['0<br>Not at all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10<br>A lot'];
+const agreeToDisagree = ['0<br>Completely<br>disagree', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10<br>Completely<br>agree'];
 
 const MakeFlowQs = function(order) {
     this.type = jsPsychSurveyLikert;
@@ -59,9 +62,6 @@ const MakeFlowQs = function(order) {
         {prompt: `During the ${order} version of the typing task, how <strong>engrossed</strong> did you feel in what you were doing?`,
         name: `engrossed_${order}`,
         labels: ["0<br>Not very engrossed", '1', '2', '3', '4', '5', '6', '7', '8', '9', "10<br>More engrossed than I've ever felt"]},
-        {prompt: `How much of your <b>conscious focus and attention</b> did the ${order} version of the typing task manage to capture?`,
-        name: `attention_${order}`,
-        labels: ["0%<br>None of it", '10%', '20%', '30%', '40%', '50%', '60%', '70%', '80%', '90%', "100%<br>All of it"]},
     ];
     this.randomize_question_order = false;
     this.scale_width = 700;
@@ -90,6 +90,48 @@ const MakeEnjoyQs = function(order) {
         {prompt: `How <strong>entertaining</strong> was the ${order} version of the typing task?`,
         name: `entertaining_${order}`,
         labels: zeroToExtremely},
+    ];
+    this.randomize_question_order = false;
+    this.scale_width = 700;
+};
+
+const MakeAnxietyQs = function(order) {
+    this.type = jsPsychSurveyLikert;
+    this.preamble = `<div style='padding-top: 50px; width: 850px; font-size:16px'>
+
+    <p>Below are a few final questions about the ${order} version of the typing task.</p>
+    <p>These questions ask about feelings of <strong>anxiety</strong>.<br>Report how <strong>anxious</strong> you felt during the ${order} version of the typing task by answering the following questions.</p></div>`;
+    this.questions = [
+        {prompt: `How <strong>anxious</strong> did you feel during the ${order} version of the typing task?`,
+        name: `anxious_${order}`,
+        labels: zeroToExtremely},
+        {prompt: `How <strong>stressed</strong> did you feel during the ${order} version of the typing task?`,
+        name: `stressed_${order}`,
+        labels: zeroToExtremely},
+        {prompt: `How <strong>"on edge"</strong> did you feel during the ${order} version of the typing task?`,
+        name: `onEdge_${order}`,
+        labels: zeroToExtremely},
+    ];
+    this.randomize_question_order = false;
+    this.scale_width = 700;
+};
+
+const MakeCtrlQs = function() {
+    this.type = jsPsychSurveyLikert;
+    this.preamble = `<div style='padding-top: 50px; width: 850px; font-size:16px'>
+
+    <p>Below are a few final questions about <strong>both versions</strong> of the typing task.</p>
+    <p>Please rate your agreement with the following statements</p></div>`;
+    this.questions = [
+        {prompt: `I felt like my performance influenced my likelihood of reaching the target score.`,
+        name: `control_1`,
+        labels: agreeToDisagree},
+        {prompt: `I felt like the harder I tried, the likelier I was to reach the target score.`,
+        name: `control_2`,
+        labels: agreeToDisagree},
+        {prompt: `I felt like the result of each round would have been the same no matter what I did.`,
+        name: `control_3`,
+        labels: agreeToDisagree},
     ];
     this.randomize_question_order = false;
     this.scale_width = 700;
@@ -125,6 +167,7 @@ timeline.push( new bonusPhase({condition: args.condition[0], ...args.bonus, firs
 
 timeline.push( new MakeFlowQs('first') );
 timeline.push( new MakeEnjoyQs('first') );
+timeline.push( new MakeAnxietyQs('first') );
 
 // bonus phase (second)
 timeline.push( bonusInstruction({condition: args.condition[1], pM: pM, ...args.bonus_instruction_2}))
@@ -134,6 +177,8 @@ timeline.push( new bonusPhase({condition: args.condition[1], ...args.bonus, firs
 
 timeline.push( new MakeFlowQs('second') );
 timeline.push( new MakeEnjoyQs('second') );
+timeline.push( new MakeAnxietyQs('second') );
+timeline.push( new MakeCtrlQs() );
 
 
 // debrief
@@ -152,11 +197,11 @@ const lastpage_start = (trial) => {
     const totalSuccess = totalSuccess_1 + totalSuccess_2;
     let totalBonus_1, totalBonus_2;
     if (args.condition[0] == "inverse streak") {
-        totalBonus_1 = (pM == .2) ? (totalSuccess_1 * 24 - (20 - totalSuccess_1) * 1) : (totalSuccess_1 * 21 - (20 - totalSuccess_1) * 4);
+        totalBonus_1 = (pM == .2) ? (totalSuccess_1 * 28 - (20 - totalSuccess_1) * 2) : (pM == .5) ? (totalSuccess_1 * 25 - (20 - totalSuccess_1) * 5) : (totalSuccess_1 * 22 - (20 - totalSuccess_1) * 8);
         totalBonus_2 = totalSuccess_2 * 20;
     } else if (args.condition[1] == "inverse streak") {
         totalBonus_1 = totalSuccess_1 * 20; 
-        totalBonus_2 = (pM == .2) ? (totalSuccess_2 * 24 - (20 - totalSuccess_2) * 1) : (totalSuccess_2 * 21 - (20 - totalSuccess_2) * 4);
+        totalBonus_2 = (pM == .2) ? (totalSuccess_1 * 28 - (20 - totalSuccess_1) * 2) : (pM == .5) ? (totalSuccess_1 * 25 - (20 - totalSuccess_1) * 5) : (totalSuccess_1 * 22 - (20 - totalSuccess_1) * 8);
     } else {
         totalBonus_1 = totalSuccess_1 * 20;
         totalBonus_2 = totalSuccess_2 * 20;        
