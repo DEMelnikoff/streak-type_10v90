@@ -561,7 +561,7 @@ export class bonusPhase extends practicePhase {
 
                 console.log(this.condition, this.trial_i, this.numOfTrial);
 
-                if (this.trial_i == this.numOfTrial) {
+                if (this.trial_i == this.numOfTrial || this.trial_i == this.numOfTrial * 2) {
                     if (this.condition == "continuous streak" || response.score <= 30) {
                         targetScore = response.score + this.delta;
                     } else {
