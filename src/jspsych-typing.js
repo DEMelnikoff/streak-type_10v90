@@ -586,8 +586,6 @@ export class bonusPhase extends practicePhase {
                   const accept_frac = Math.max(0, Math.min(1, wins_needed / trials_left));
                   const threshold   = Math.max(0, Math.min(1, 1 - accept_frac));
                   win = (trial_num === 1) ? Math.random() < this.pM : (F >= threshold);
-                  console.log(this.pM, trial_num, wins_so_far, F, threshold)
-
                 }
 
                 let targetScore;
