@@ -536,11 +536,13 @@ export class bonusPhase extends practicePhase {
                 // draw delta on first click
                 if (response.typed == 1) { this.delta = 1 + Math.floor(Math.random() * 10 ) };
 
-                let targetScore = Math.floor(Math.random() * 11) + 55;
-
                 let score_array = jsPsych.data.get().filter({phase: 'bonus'}).select('score').values;
 
-                let F;
+                let win_array = jsPsych.data.get().filter({phase: 'bonus'}).select('success').values;
+
+                let wins_so_far = win_array.filter(Boolean).length;
+
+                let F, targetScore;
 
                 if (score_array.length === 0) {
                     F = 0.5;
@@ -550,25 +552,28 @@ export class bonusPhase extends practicePhase {
                     F = Math.max(0, Math.min(1, F));
                 };
 
-                let p = this.pM + .35 * (F - 0.5);
+                let target_wins = (this.condition == "continuous streak") ? Math.round(this.pM * 20) : Math.round(this.pM * 20) - 1;
+                let wins_needed = target_wins - wins_so_far;
+                let trial_num = this.trial_i % 20 || 20;
+                let trials_left = 19 - trial_num + 1;
+                let accept_frac = wins_needed / trials_left;
+                let threshold = 1 - accept_frac;
+                let win = (trial_num == 1) ? Math.random() < this.pM : F >= threshold;
 
-                p = Math.max(0, Math.min(1, p));
+                if (wins_needed <= 0) { win = false };
+                if (wins_needed >= trials_left) { win = true };
 
-                if (response.score > 30) { 
-                    let multiplier = (Math.random() < p) ? -1 : 1;
-                    targetScore = response.score + this.delta * multiplier
-                }
+                let multiplier = (win) ? -1 : 1;
 
-                console.log(this.condition, this.trial_i, this.numOfTrial);
-
-                if (this.trial_i == this.numOfTrial || this.trial_i == this.numOfTrial * 2) {
-                    if (this.condition == "continuous streak" || response.score <= 30) {
-                        targetScore = response.score + this.delta;
-                    } else {
-                        console.log("inverse streak")
-                        targetScore = response.score - this.delta;
-                    }
+                if (trial_num == 20) {
+                    targetScore = (this.condition == "continuous streak") ? response.score + this.delta : response.score - this.delta;
+                } else if (response.score < 30) {
+                    targetScore = 45 + Math.floor(Math.random() * 20);
+                } else {
+                    targetScore = response.score + this.delta * multiplier;
                 };
+
+                console.log(trial_num, this.pM, wins_needed, threshold, F)
 
                 if (this.true_random) { trial.data.target = targetScore };
 
@@ -577,7 +582,7 @@ export class bonusPhase extends practicePhase {
                     this.early_stop && end_trial(trial.data);
                 } else {
                     trial.data.success = false;
-                }
+                };
 
             }, 
             accept_allkeys: true, 
