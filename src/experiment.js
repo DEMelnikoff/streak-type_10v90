@@ -199,7 +199,7 @@ const lastpage_start = (trial) => {
         totalBonus_2 = totalSuccess_2 * 20;
     } else if (args.condition[1] == "inverse streak") {
         totalBonus_1 = totalSuccess_1 * 20; 
-        totalBonus_2 = (pM == .2) ? (totalSuccess_1 * 28 - (20 - totalSuccess_1) * 2) : (pM == .5) ? (totalSuccess_1 * 25 - (20 - totalSuccess_1) * 5) : (totalSuccess_1 * 22 - (20 - totalSuccess_1) * 8);
+        totalBonus_2 = (pM == .2) ? (totalSuccess_2 * 28 - (20 - totalSuccess_2) * 2) : (pM == .5) ? (totalSuccess_2 * 25 - (20 - totalSuccess_2) * 5) : (totalSuccess_2 * 22 - (20 - totalSuccess_2) * 8);
     } else {
         totalBonus_1 = totalSuccess_1 * 20;
         totalBonus_2 = totalSuccess_2 * 20;        
