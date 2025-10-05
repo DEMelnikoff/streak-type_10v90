@@ -555,11 +555,11 @@ export class bonusPhase extends practicePhase {
                 p = Math.max(0, Math.min(1, p));
 
                 if (response.score > 30) { 
-                    let multiplier = (Math.random() < p) ? 1 : -1;
+                    let multiplier = (Math.random() < p) ? -1 : 1;
                     targetScore = response.score + this.delta * multiplier
                 }
 
-                console.log(this.condition);
+                console.log(this.condition, this.trial_i, this.numOfTrial);
 
                 if (this.trial_i == this.numOfTrial) {
                     if (this.condition == "continuous streak" || response.score <= 30) {
