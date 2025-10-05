@@ -534,46 +534,71 @@ export class bonusPhase extends practicePhase {
                 keypressCallback(info, response, trial, response_history, counter, display_html, end_trial);
 
                 // draw delta on first click
-                if (response.typed == 1) { this.delta = 1 + Math.floor(Math.random() * 10 ) };
-
-                let score_array = jsPsych.data.get().filter({phase: 'bonus'}).select('score').values;
-
-                let win_array = jsPsych.data.get().filter({phase: 'bonus'}).select('success').values;
-
-                let wins_so_far = win_array.filter(Boolean).length;
-
-                let F, targetScore;
-
-                if (score_array.length === 0) {
-                    F = 0.5;
-                } else {
-                    let lessEqual = score_array.filter(v => v <= response.score).length;
-                    F = (lessEqual - 0.5) / score_array.length;
-                    F = Math.max(0, Math.min(1, F));
+                if (response.typed == 1) { 
+                    this.delta = 1 + Math.floor(Math.random() * 10 ) 
                 };
 
-                let target_wins = (this.condition == "continuous streak") ? Math.round(this.pM * 20) : Math.round(this.pM * 20) - 1;
+                // Helpers to scope to current 20-trial block
+                const T = 20;
+                const blockIndex = Math.floor((this.trial_i - 1) / T);
+                const blockStart = blockIndex * T;
+
+                // Slice out just the scores/wins from the current block
+                // Important: jsPsych stores values in trial order, so slice is safe
+                let score_array = jsPsych.data.get().filter({phase: 'bonus'}).select('score').values;
+                let win_array = jsPsych.data.get().filter({phase: 'bonus'}).select('success').values;
+                score_array = score_array.slice(blockStart, this.trial_i - 1);
+                win_array   = win_array.slice(blockStart, this.trial_i - 1);
+                
+                const wins_so_far = win_array.filter(Boolean).length;
+
+                // Percentile F among past in this block
+                let F;
+                if (score_array.length === 0) {
+                  F = 0.5;
+                } else {
+                  const lessEqual = score_array.filter(v => v <= response.score).length;
+                  F = (lessEqual - 0.5) / score_array.length;
+                  F = Math.max(0, Math.min(1, F));
+                }
+
+                // Target wins for this block
+                const target_wins = (this.condition === "continuous streak")
+                  ? Math.round(this.pM * T)
+                  : Math.round(this.pM * T) - 1;
+
+                const trial_num   = (this.trial_i % T) || T; // 1..20 within block
+                const trials_left = T - trial_num;
+
+                // Wins still needed
                 let wins_needed = target_wins - wins_so_far;
-                let trial_num = this.trial_i % 20 || 20;
-                let trials_left = 19 - trial_num + 1;
-                let accept_frac = wins_needed / trials_left;
-                let threshold = 1 - accept_frac;
-                let win = (trial_num == 1) ? Math.random() < this.pM : F >= threshold;
 
-                if (wins_needed <= 0) { win = false };
-                if (wins_needed >= trials_left) { win = true };
+                // Decide win deterministically
+                let win;
 
-                let multiplier = (win) ? -1 : 1;
+                // Force guards FIRST to avoid /0 and NaNs
+                if (wins_needed <= 0) {
+                  win = false; // quota met → remaining are losses
+                } else if (wins_needed >= trials_left) {
+                  win = true;  // must accept all remaining
+                } else {
+                  // Rolling-quota threshold
+                  const accept_frac = Math.max(0, Math.min(1, wins_needed / trials_left));
+                  const threshold   = Math.max(0, Math.min(1, 1 - accept_frac));
+                  win = (trial_num === 1) ? Math.random() < this.pM : (F >= threshold);
+                }
+
+                let targetScore;
 
                 if (trial_num == 20) {
                     targetScore = (this.condition == "continuous streak") ? response.score + this.delta : response.score - this.delta;
                 } else if (response.score < 30) {
                     targetScore = 45 + Math.floor(Math.random() * 20);
                 } else {
-                    targetScore = response.score + this.delta * multiplier;
+                    targetScore = win ? response.score - this.delta : response.score + this.delta;
                 };
 
-                console.log(trial_num, this.pM, wins_needed, threshold, F)
+                console.log(this.pM, trial_num, wins_so_far, F, win_array)
 
                 if (this.true_random) { trial.data.target = targetScore };
 
