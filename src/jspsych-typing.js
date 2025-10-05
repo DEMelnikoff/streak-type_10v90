@@ -559,10 +559,13 @@ export class bonusPhase extends practicePhase {
                     targetScore = response.score + this.delta * multiplier
                 }
 
+                console.log(this.condition);
+
                 if (this.trial_i == this.numOfTrial) {
                     if (this.condition == "continuous streak" || response.score <= 30) {
                         targetScore = response.score + this.delta;
                     } else {
+                        console.log("inverse streak")
                         targetScore = response.score - this.delta;
                     }
                 };
