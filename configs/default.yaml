@@ -138,34 +138,57 @@ images_to_preload:
 # consent pages
 
 consent_page: &p1 >
-  <div class='instruction'> 
-  <h2 class='jspsych-content'>Welcome</h2>
-  <dl>
-      <dt>Purpose</dt>
-      <dd>The purpose of the study is to understand people’s decisions and experiences over time. </dd>
+  <div class='instruction'>
+    <h2 class='jspsych-content'>Research Information Sheet – Behavioral Lab</h2>
+    <p><strong>Vanderbilt University</strong><br>
+    Department: Marketing<br>
+    Principal Investigator: Jackie Silverman, PhD</p>
 
-      <dt>Procedures</dt>
-      <dd>If you choose to participate, you will be asked to complete a series of short tasks and answer some questions about it. </dd>
+    <h3>Introduction</h3>
+    <p>You are being asked to take part in a research study.</p>
 
-      <dt>Duration</dt>
-      <dd>This will take about 15-20 minutes.</dd>
+    <h3>Who is doing this research study?</h3>
+    <p>The person in charge of this research study is Dr. Jackie Silverman of Vanderbilt University Department of Marketing.</p>
 
-      <dt>Risks</dt>
-      <dd>There are no anticipated risks or discomforts from this research.</dd>
+    <h3>What is the purpose of this research study?</h3>
+    <p>The purpose of this research is to understand how people make decisions.</p>
 
-      <dt>Benefits</dt>
-      <dd>There are no anticipated benefits to you from this research.</dd>
+    <h3>Who will be in this research study?</h3>
+    <p>About 10,000 people will take part in this study. You must be at least 18 years of age and able to understand English to participate.</p>
 
-      <dt>Costs and Compensation</dt>
-      <dd>If you decide to participate there will be no additional cost to you. There is the opportunity to earn an Amazon gift card.</dd>
+    <h3>What will you be asked to do in this research study, and how long will it take?</h3>
+    <p><strong>Description:</strong> You will complete a short survey. In this survey, you may be asked to evaluate your feelings and opinions towards a variety of different people, places, or events. Please note that you will be randomly assigned (which is like flipping a coin) to one of two scenarios in the survey. Participants in each group receive different scenarios. If you have any questions or concerns, let the research team know.</p>
+    <p><strong>Eligibility requirements:</strong> You must be 18 or older to participate in this research study and able to read English at a proficient level.</p>
+    <p><strong>Compensation:</strong> Compensation will be set at the amount of $8/hour. Course credit will be determined by your professor, if applicable, for Vanderbilt University students. For students, whether or not you voluntarily participate in this research, your academic performance or standing will not be affected.</p>
 
-      <dt>Participation</dt>
-      <dd>Taking part or not in this research study is your decision. You can decide to participate and then change your mind at any point. If you choose not to participate or to terminate your participation before the study is over, you are free to go, but in place of this study your obligation will be to complete other research studies or papers to fulfill the Research Requirement for the course. Information regarding the Research Requirement, including specific details for its completion, was shared with you upon your registration in the subject pool and can be found here: https://sites.udel.edu/buadresearch/.</dd>
+    <h3>Are there any risks to being in this research study?</h3>
+    <p>There may be a possible risk of loss of confidentiality and every effort will be made to protect confidentiality of the data.</p>
 
-      <dt>Contact Information</dt>
-      <dd>If you have any questions about the purpose, procedures, or any other issues related to this research study you may contact the Principal Investigator, Dr. Silverman, at jasilv@udel.edu. </dd>
-  </dl>
+    <h3>Are there any benefits from being in this research study?</h3>
+    <p>You will not directly benefit from participating in this research.</p>
+
+    <h3>Do you have choices about taking part in this research study?</h3>
+    <p>If you do not want to take part in this research study, you are welcome to exit now or to not continue at any time.</p>
+
+    <h3>How will your research information be kept confidential?</h3>
+    <p>No identifying information will be collected in this survey. The data from this research may be published; but the information you provide will be pooled with all respondents and reported in aggregate. In some cases, de-identified data may be made publicly available on platforms such as the Open Science Framework. Representatives of Vanderbilt University may inspect study records for audit or quality assurance purposes.</p>
+
+    <h3>Additional confidentiality details</h3>
+    <p>All efforts, within reason, will be made to keep your personal information in your research record confidential but total confidentiality cannot be guaranteed. The data will be stored in secure files accessible only to Dr. Jackie Silverman and trained research assistants. Each participant in the study will have a code number. Your name and other identifying information about you will not be used in the research. After the research is completed, we may save de-identified data for use in future research.</p>
+
+    <h3>Study Results</h3>
+    <p>Study results will not be made available to participants at this time.</p>
+
+    <h3>Circumstances under which the Principal Investigator may withdraw you from study participation</h3>
+    <p>You may be withdrawn from the study if you fail a question checking for attention.</p>
+
+    <h3>What happens if you choose to withdraw from study participation?</h3>
+    <p>Nothing.</p>
+
+    <h3>Contact Information</h3>
+    <p>If you have any questions about the research, you may email Jackie.Silverman@Vanderbilt.edu. For additional information about your rights as a participant in this study, to discuss problems, concerns, and questions, or to offer input, please contact the Vanderbilt University Social Behavioral Educational Research Institutional Review Board (VU SBER IRB) at irb@vanderbilt.edu.</p>
   </div>
+
 
 consent:
   type: checkbox
@@ -174,7 +197,7 @@ consent:
   questions:
     - prompt: *p1
       timing_post_trial: 0
-      options: ["I have read and understood the information in this form and I agree to participate in the study. I am 18 years of age or older. I have been given the opportunity to ask any questions I had and those questions have been answered to my satisfaction. I understand that I can print or request a copy of this form for my records"]
+      options: ["I have read this informational sheet, and I freely and voluntarily choose to participate. By proceeding, you agree to participate in this study. If you do not wish to participate, please close your browser now."]
       required: true
   required_message: To proceed to the experiment, please ensure that you have checked the checkbox
   button_label: Next
