@@ -238,9 +238,11 @@ jsPsych.opts.show_progress_bar = args.show_progress_bar;
 // $('div#jspsych-content').css({max-width: `${args.screenwidth} px`}); can achieve similar result
 jsPsych.opts.experiment_width = args.screenwidth;
 jsPsych.opts.on_finish = () => {
-    setTimeout(function() { 
-        location.href = `https://udel-buad.sona-systems.com/webstudy_credit.aspx?experiment_id=510&credit_token=97edfae6419a4ced9b13611a00dca7d0&survey_code=${sona_id}`
-    }, 500); // 2 seconds
-
+  document.body.innerHTML = `
+    <div style="font-size:20px; text-align:center; padding:40px;">
+      <p>Please enter the following completion code to receive payment:</p>
+      <p style="font-weight:bold; font-size:24px; margin-top:20px;">JSDEM25</p>
+    </div>
+  `;
 }
 jsPsych.run(timeline);

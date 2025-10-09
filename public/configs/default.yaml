@@ -423,7 +423,7 @@ debrief_page: &debrief >
   <br>
   <p>Within one week, you'll find out if you won the $100.00 bonus.<br>If you win, you'll receive your bonus by email in the form of an electronic Amazon gift card.</p>
   <p>To receive payment, please enter your email address in the space below,<br>
-  then proceed to be redirected to Sona Systems.</p>
+  then proceed to get your completion code.</p>
 
 debrief:
   type: survey
