@@ -241,7 +241,7 @@ jsPsych.opts.on_finish = () => {
   document.body.innerHTML = `
     <div style="font-size:20px; text-align:center; padding:40px;">
       <p>Please enter the following completion code to receive payment:</p>
-      <p style="font-weight:bold; font-size:24px; margin-top:20px;">JSDEM25</p>
+      <p style="font-weight:bold; font-size:24px; margin-top:20px;">19620</p>
     </div>
   `;
 }
